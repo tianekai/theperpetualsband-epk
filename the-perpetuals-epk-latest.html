@@ -251,7 +251,6 @@
       </div>
       <div>
         <h3>Direct Contact</h3>
-        <div class="contact-detail"><div class="cd-icon">✉️</div><div><span class="cd-label">Email</span><span class="cd-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f79598989c9e9990b7839f9287928587928382969b84d994989a">[email&#160;protected]</a></span></div></div>
         <div class="contact-detail"><div class="cd-icon">✉️</div><div><span class="cd-label">Email</span><span class="cd-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1f5c9c4f1c4d3d1c4d5d4c0cdd2e3c0cfc5e1c6ccc0c8cd8fc2cecc">[email&#160;protected]</a></span></div></div>
         <div class="contact-detail"><div class="cd-icon">📞</div><div><span class="cd-label">Booking Contact</span><span class="cd-val">Barbara &mdash; +1 (909) 644-5324</span></div></div>
         <div class="contact-detail"><div class="cd-icon">📍</div><div><span class="cd-label">Based In</span><span class="cd-val">Beaumont, CA</span></div></div>
@@ -316,4 +315,44 @@ function filterSongs(f,btn){
       <div><div class="song-title">${s.t}</div><div class="song-artist">${s.a}</div></div>
       <div class="song-badge">${labels[s.s]}</div>
     </div>`
-  ).join(''
+  ).join('');
+}
+// Booking form AJAX submission
+const bookingForm=document.getElementById('booking-form');
+const formStatus=document.getElementById('form-status');
+const submitBtn=document.getElementById('booking-submit');
+
+bookingForm.addEventListener('submit',async function(e){
+  e.preventDefault();
+  submitBtn.disabled=true;
+  submitBtn.textContent='Sending...';
+  formStatus.style.display='none';
+
+  try{
+    const response=await fetch('/',{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:new URLSearchParams(new FormData(bookingForm)).toString()
+    });
+
+    if(response.ok){
+      formStatus.style.display='block';
+      formStatus.style.background='rgba(76,175,80,.15)';
+      formStatus.style.color='#81c784';
+      formStatus.style.border='1px solid rgba(76,175,80,.3)';
+      formStatus.textContent='Booking request sent! We\'ll get back to you within 24 hours.';
+      bookingForm.reset();
+    }else{
+      throw new Error('Submission failed');
+    }
+  }catch(err){
+    formStatus.style.display='block';
+    formStatus.style.background='rgba(244,67,54,.15)';
+    formStatus.style.color='#e57373';
+    formStatus.style.border='1px solid rgba(244,67,54,.3)';
+    formStatus.textContent='Something went wrong. Please try again or contact us directly.';
+  }finally{
+    submitBtn.disabled=false;
+    submitBtn.textContent='Send Booking Request';
+  }
+});
