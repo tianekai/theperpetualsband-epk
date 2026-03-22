@@ -231,13 +231,13 @@
         <input type="hidden" name="subject" value="New Booking Request from %{formName}"/>
         <p style="display:none"><label>Don't fill this: <input name="bot-field"/></label></p>
         <div class="form-row">
-          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
-          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@example.com"/></div>
+          <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" placeholder="Jane Smith"/></div>
+          <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="jane@example.com"/></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Event Date</label><input type="date"/></div>
-          <div class="form-group"><label>Event Type</label>
-            <select>
+          <div class="form-group"><label for="eventDate">Event Date</label><input id="eventDate" name="eventDate" type="date"/></div>
+          <div class="form-group"><label for="eventType">Event Type</label>
+            <select id="eventType" name="eventType">
               <option value="">Select event type</option>
               <option>Wedding / Reception</option>
               <option>Corporate Event</option>
@@ -248,14 +248,14 @@
             </select>
           </div>
         </div>
-        <div class="form-group"><label>Venue / Location</label><input type="text" placeholder="Venue name and city"/></div>
-        <div class="form-group"><label>Tell Us About Your Event</label><textarea placeholder="Estimated guest count, set length, special requests..."></textarea></div>
+        <div class="form-group"><label for="loc">Venue / Location</label><input type="text" id="loc" name="location" placeholder="Venue name and city"/></div>
+        <div class="form-group"><label for="message">Tell Us About Your Event</label><textarea id="message" name="message" placeholder="Estimated guest count, set length, special requests..."></textarea></div>
         <button type="submit" class="btn btn-primary" style="align-self:flex-start" id="booking-submit">Send Booking Request</button>
         <div id="form-status" style="display:none;padding:.75rem;border-radius:2px;font-size:.85rem;margin-top:.5rem"></div>
       </form>
       <div>
         <h3>Direct Contact</h3>
-        <div class="contact-detail"><div class="cd-icon">✉️</div><div><span class="cd-label">Email</span><span class="cd-val"><a href="mailto:theperpetualsband@gmail.com">[email&#160;protected]</a></span></div></div>
+        <div class="contact-detail"><div class="cd-icon">✉️</div><div><span class="cd-label">Email</span><span class="cd-val"><a href="/cdn-cgi/l/email-protection#65110d001500171500111004091607040b01250208040c094b060a08">[email&#160;protected]</a></span></div></div>
         <div class="contact-detail"><div class="cd-icon">📞</div><div><span class="cd-label">Booking Contact</span><span class="cd-val">Barbara &mdash; +1 (909) 644-5324</span></div></div>
         <div class="contact-detail"><div class="cd-icon">📍</div><div><span class="cd-label">Based In</span><span class="cd-val">Beaumont, CA</span></div></div>
         <div class="contact-detail"><div class="cd-icon">🎸</div><div><span class="cd-label">Available For</span><span class="cd-val">Weddings · Corporates · Festivals · Private Events</span></div></div>
@@ -270,7 +270,7 @@
   <div class="footer-copy">© 2026 The Perpetuals · All Rights Reserved · Electronic Press Kit</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const songs=[
   {t:"Learn to Fly",a:"Foo Fighters",s:"set1"},
   {t:"I'm the Only One",a:"Melissa Etheridge",s:"set1"},
@@ -321,6 +321,7 @@ function filterSongs(f,btn){
     </div>`
   ).join('');
 }
+
 // Booking form AJAX submission
 const bookingForm=document.getElementById('booking-form');
 const formStatus=document.getElementById('form-status');
@@ -355,8 +356,12 @@ bookingForm.addEventListener('submit',async function(e){
     formStatus.style.color='#e57373';
     formStatus.style.border='1px solid rgba(244,67,54,.3)';
     formStatus.textContent='Something went wrong. Please try again or contact us directly.';
-  }finally{
     submitBtn.disabled=false;
     submitBtn.textContent='Send Booking Request';
   }
 });
+
+filterSongs('all', document.querySelector('.tab.active'));
+</script>
+</body>
+</html>
